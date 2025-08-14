@@ -91,12 +91,11 @@ Bu proje Tailwind CSS V4 Alpha sürümünü kullanmaktadır. Stil dosyası `src/
 ## 🌐 Canlı Demo
 
 - **Ana Site**: [https://trfturkiyefindik.com](https://trfturkiyefindik.com)
-- **Demo**: [https://demo.trfturkiyefindik.com](https://demo.trfturkiyefindik.com)
 
 ## 📱 Mobil Uygulama
 
-- **iOS App Store**: [Türkiye Fındık iOS](https://apps.apple.com/app/turkiye-findik)
-- **Google Play**: [Türkiye Fındık Android](https://play.google.com/store/apps/details?id=com.trfturkiyefindik)
+- **iOS App Store**: [Türkiye Fındık iOS (Yakında)](https://apps.apple.com/app/turkiye-findik)
+- **Google Play**: [Türkiye Fındık Android (Yakında)](https://play.google.com/store/apps/details?id=com.trfturkiyefindik)
 
 ## 🤝 Katkıda Bulunma
 
