@@ -1,74 +1,127 @@
-# SaaS & Startup Astro & Tailwind CSS Template
+# Türkiye Fındık - Dijital Fındık Pazarı
 
-## License
+Türkiye Fındık, üretici ve fabrikaları buluşturan dijital fındık pazarı platformudur. Güvenli, hızlı ve kolay fındık ticareti için tasarlanmış modern web uygulaması.
 
-This template is open-source software licensed under the [GPL-3.0 license](https://opensource.org/licenses/GPL-3.0). You are free to fork, modify, and use it in your projects.
+## 🚀 Özellikler
 
-## Attribution
+- **Üretici Paneli**: Çiftçiler kolayca fındık satış talebi oluşturabilir
+- **Fabrika Paneli**: Fabrikalar talepleri görüp takip edebilir
+- **QR Kodlu Teslimat**: Güvenli ve hızlı teslimat süreci
+- **Otomatik Ödeme**: Teslimat onayı sonrası otomatik ödeme
+- **Fiyat Takibi**: Canlı fındık fiyatları ve analitik
+- **Mobil Uygulama**: iOS ve Android desteği
+- **Gerçek Zamanlı Bildirimler**: Anlık güncellemeler
 
-Originally created by Michael Andreuzza. Modified, extended, and redistributed by Bektur Aslan with added sections and updated UI/UX for broader usage.
+## 🛠️ Teknolojiler
 
-## This template is using Tailwind CSS V4
+- **Frontend**: Astro + Tailwind CSS V4
+- **Stil**: Modern CSS ve Tailwind CSS
+- **JavaScript**: Alpine.js
+- **Deployment**: Vercel, Netlify uyumlu
 
-Now we are using only a CSS file. It's called `global.css` and it's located in the src/styles folder. Now we are eimporting Tailwind CSS on the same file instead of using the `tailwind.config.cjs` file. Like this:
+## 📦 Kurulum
 
-```css
-// Importing Tailwind CSS
-@import "tailwindcss";
-// Importing Tailwind plugins
-@plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
+Projeyi yerel ortamınızda çalıştırmak için:
+
+```bash
+# Bağımlılıkları yükleyin
+npm install
+
+# Geliştirme sunucusunu başlatın
+npm run dev
+
+# Tarayıcıda açın
+# http://localhost:3000
 ```
 
-Then to add your styles you will use the @theme directive. Like this:
-
-```css
-@theme {
-  /* Your CSS goes here, see how styles are written on the global.css file */
-}
-```
-
-Remember this is just in Alpha version, so you can use it as you want. Just keep an eye on the changes that Tailwind CSS is going to make.
-
-## Template Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## 🏗️ Proje Yapısı
 
 ```
 /
-├── public/
+├── public/                 # Statik dosyalar
+│   ├── logo.svg           # Logo
+│   └── og-image.png       # Sosyal medya görseli
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/        # Bileşenler
+│   │   ├── Forms/         # Form bileşenleri
+│   │   ├── global/        # Global bileşenler
+│   │   ├── infopages/     # Bilgi sayfaları
+│   │   └── landing/       # Ana sayfa bileşenleri
+│   ├── layouts/           # Sayfa düzenleri
+│   ├── pages/             # Sayfalar
+│   └── styles/            # Stil dosyaları
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 📄 Sayfalar
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Ana Sayfa** (`/`) - Platform tanıtımı ve özellikler
+- **Giriş** (`/login`) - Kullanıcı girişi
+- **Kayıt** (`/signup`) - Yeni kullanıcı kaydı
+- **SSS** (`/faq`) - Sık sorulan sorular
+- **Gizlilik** (`/privacy`) - Gizlilik politikası
+- **Şartlar** (`/terms`) - Kullanım şartları
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🎨 Tailwind CSS V4 Kullanımı
 
-## Commands
+Bu proje Tailwind CSS V4 Alpha sürümünü kullanmaktadır. Stil dosyası `src/styles/global.css` içinde:
 
-All commands are run from the root of the project, from a terminal:
+```css
+// Tailwind CSS import
+@import "tailwindcss";
+// Tailwind eklentileri
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
+@theme {
+  /* Özel stiller buraya */
+}
+```
 
-## Want to learn more?
+## 🚀 Komutlar
 
-Feel free to check Astro's [documentation](https://docs.astro.build)
+| Komut                | Açıklama                                    |
+| :------------------- | :------------------------------------------ |
+| `npm install`        | Bağımlılıkları yükler                       |
+| `npm run dev`        | Geliştirme sunucusunu başlatır (localhost:3000) |
+| `npm run build`      | Üretim için derler (`./dist/`)              |
+| `npm run preview`    | Derlenmiş siteyi önizler                    |
+| `npm run astro ...`  | Astro CLI komutlarını çalıştırır            |
 
-### Deploy
+## 🌐 Canlı Demo
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/bekturaslan/syntro-astro)
+- **Ana Site**: [https://trfturkiyefindik.com](https://trfturkiyefindik.com)
+- **Demo**: [https://demo.trfturkiyefindik.com](https://demo.trfturkiyefindik.com)
+
+## 📱 Mobil Uygulama
+
+- **iOS App Store**: [Türkiye Fındık iOS](https://apps.apple.com/app/turkiye-findik)
+- **Google Play**: [Türkiye Fındık Android](https://play.google.com/store/apps/details?id=com.trfturkiyefindik)
+
+## 🤝 Katkıda Bulunma
+
+1. Bu repository'yi fork edin
+2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
+4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
+5. Pull Request oluşturun
+
+## 📄 Lisans
+
+Bu proje [GPL-3.0 lisansı](https://opensource.org/licenses/GPL-3.0) altında lisanslanmıştır.
+
+## 👥 Geliştirici
+
+**Türkiye Fındık** - Dijital fındık ticareti platformu
+
+- **Website**: [https://trfturkiyefindik.com](https://trfturkiyefindik.com)
+- **E-posta**: info@trfturkiyefindik.com
+- **Telefon**: +90 xxx xxx xx xx
+
+## 🚀 Deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/trfturkiyefindik/trfturkiyefindik.com)
 
 ---
-Maintained & updated by Bektur Aslan. Contributions welcome.
+
+**Türkiye Fındık** - Fındık ticaretinin dijital geleceği 🌰
