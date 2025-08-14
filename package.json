@@ -1,7 +1,10 @@
 {
-  "name": "@getastrothemes/syntro-astro",
-  "version": "2.0.0",
+  "name": "trfturkiyefindik",
+  "version": "1.0.0",
   "private": true,
+  "description": "Türkiye Fındık - Üretici ve Fabrikaları Buluşturan Dijital Pazar",
+  "keywords": ["fındık", "ticaret", "dijital pazar", "üretici", "fabrika"],
+  "author": "Türkiye Fındık",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

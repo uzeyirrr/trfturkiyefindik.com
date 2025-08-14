@@ -2,7 +2,7 @@ import { defineConfig, fontProviders } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
-  site: "https://yoursite.com",
+  site: "https://trfturkiyefindik.com",
   experimental: {
     fonts: [
       {

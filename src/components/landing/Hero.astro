@@ -3,18 +3,16 @@ import OptimizedImage from "../../layouts/utilities/OptimizedImage.astro";
 
 const featuresList = [
   {
-    title: "Astro, Tailwind CSS and Alpine.js",
-    description: "These are the popular technologies behind Syntro.",
+    title: "Üretici Paneli",
+    description: "Çiftçiler, fındık satmak istediklerinde kolayca talep oluşturabilir. Talep, en yakın fabrikaya otomatik iletilir.",
   },
   {
-    title: "Includes 6 pages",
-    description:
-      "You will find this landing, FAQ, terms, privacy, sign up, and sign in pages.",
+    title: "Fabrika Paneli",
+    description: "Fabrikalar, kendilerine iletilen talepleri görüp takip edebilir, teslimatları onaylayabilir.",
   },
   {
-    title: "Different sections",
-    description:
-      "The starter includes different feature sections, a pricing table, testimonial, CTA, and full forms.",
+    title: "Fiyat Takibi",
+    description: "Yıl boyunca güncel fındık fiyatlarını takip edebileceğiniz bir borsa ekranı.",
   },
 ];
 ---
@@ -23,28 +21,26 @@ const featuresList = [
   <div class="px-8 pt-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
     <div class="max-w-2xl text-center mx-auto lg:text-balance mb-10">
       <p class="text-sm leading-normal font-bold uppercase text-accent-600">
-        Tagline
+        Türkiye Fındık
       </p>
       <h2
         class="text-xl/snug leading-tight tracking-tight sm:text-2xl/snug md:text-3xl/snug capitalize lg:text-4xl/snug mt-4 font-medium text-base-900">
-        An astro template built with Astro and Tailwind CSS for your next
-        project
+        Türkiye Fındık – Üretici ve Fabrikaları Buluşturan Dijital Pazar
       </h2>
       <p class="text-base leading-normal mt-4 text-base-500 font-medium">
-        The fastest method for working together on staging and temporary
-        environments.
+        Fındığınızı en iyi fiyata, güvenle satın. Fiyat takibi yapın, taleplerinizi kolayca yönetin.
       </p>
       <div
         class="flex flex-wrap items-center gap-2 justify-center mx-auto mt-12">
         <a
-          href="https://github.com/bekturaslan/syntro-astro"
-          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-base-500 bg-white hover:bg-accent-100 ring-1 ring-base-200 focus:ring-accent-100 hover:text-accent-600 h-9 px-4 py-2 text-sm font-medium rounded-md">
-          Get This Template
+          href="/signup"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-700/50 h-9 px-4 py-2 text-sm font-medium rounded-md">
+          Hemen Başla
         </a>
         <a
-          href="https://getastrothemes.com/free-astro-themes-templates/"
-          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-700/50 h-9 px-4 py-2 text-sm font-medium rounded-md">
-          More Free Astro themes
+          href="#how-it-works"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-base-500 bg-white hover:bg-accent-100 ring-1 ring-base-200 focus:ring-accent-100 hover:text-accent-600 h-9 px-4 py-2 text-sm font-medium rounded-md">
+          Daha Fazla Bilgi
         </a>
       </div>
     </div>
@@ -62,7 +58,7 @@ const featuresList = [
       <div class="p-10 bg-accent-50 rounded-2xl">
         <OptimizedImage
           src="/dashboard.png"
-          alt="#_"
+          alt="Türkiye Fındık Dashboard"
           width={1200}
           height={700}
           class="relative w-full ring-4 ring-base-50 border border-base-200 lg:rounded-2xl object-cover rounded"

@@ -1,0 +1,55 @@
+{
+    "hero": {
+      "title": "Türkiye Fındık – Üretici ve Fabrikaları Buluşturan Dijital Pazar",
+      "subtitle": "Fındığınızı en iyi fiyata, güvenle satın. Fiyat takibi yapın, taleplerinizi kolayca yönetin.",
+      "cta_primary": "Hemen Başla",
+      "cta_secondary": "Daha Fazla Bilgi"
+    },
+    "features": [
+      {
+        "title": "Üretici Paneli",
+        "description": "Çiftçiler, fındık satmak istediklerinde kolayca talep oluşturabilir. Talep, en yakın fabrikaya otomatik iletilir."
+      },
+      {
+        "title": "Fabrika Paneli",
+        "description": "Fabrikalar, kendilerine iletilen talepleri görüp takip edebilir, teslimatları onaylayabilir."
+      },
+      {
+        "title": "Fiyat Takibi",
+        "description": "Yıl boyunca güncel fındık fiyatlarını takip edebileceğiniz bir borsa ekranı."
+      },
+      {
+        "title": "QR Kodlu Teslimat",
+        "description": "Talep oluşturulduğunda üreticiye QR kodlu fiş verilir. Fiş ile fabrikaya gidip teslimat yapılır."
+      },
+      {
+        "title": "Güvenli Ödeme",
+        "description": "Fabrika teslimatı onayladığında, ödeme doğrudan Türkiye Fındık üzerinden üretici hesabına yatırılır."
+      }
+    ],
+    "how_it_works": {
+      "title": "Nasıl Çalışır?",
+      "steps": [
+        "Üretici sisteme giriş yapar ve fındık satışı için talep oluşturur.",
+        "Talep, en yakın fabrikaya otomatik olarak iletilir.",
+        "Üreticiye QR kodlu teslim fişi verilir.",
+        "Üretici fiş ile fabrikaya gider ve fındığı teslim eder.",
+        "Fabrika teslimatı onaylar, ödeme üretici hesabına yatırılır."
+      ]
+    },
+    "cta_section": {
+      "title": "Türkiye Fındık ile fındığınızı en güvenli şekilde satın.",
+      "subtitle": "Hemen kayıt olun, avantajlardan faydalanmaya başlayın.",
+      "cta_text": "Kayıt Ol"
+    },
+    "footer": {
+      "links": [
+        "Hakkımızda",
+        "İletişim",
+        "Gizlilik Politikası",
+        "Kullanım Şartları"
+      ],
+      "copyright": "© 2025 Türkiye Fındık. Tüm hakları saklıdır."
+    }
+  }
+  

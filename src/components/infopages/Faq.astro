@@ -4,10 +4,10 @@
       <div class="text-center lg:text-left">
         <p
           class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl capitalize lg:text-4xl font-medium text-base-900 lg:text-balance">
-          Frequently asked questions
+          Sık Sorulan Sorular
         </p>
         <p class="text-base leading-normal mt-4 text-base-500 font-medium">
-          Answers to commonly asked questions about our platform
+          Platformumuz hakkında sık sorulan soruların cevapları
         </p>
       </div>
       <div
@@ -25,7 +25,7 @@
           <button
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
-            <span>How does end-to-end encryption work?</span>
+            <span>Türkiye Fındık platformu nasıl çalışır?</span>
             <svg
               class="size-5 duration-300 ease-out text-accent-500 -rotate-[45deg]"
               :class="{ '-rotate-[45deg]': activeAccordion==id }"
@@ -43,11 +43,7 @@
           </button>
           <div x-show="activeAccordion==id" x-collapse="">
             <div class="p-4 pt-2 text-zinc-500">
-              End-to-end encryption ensures that only the sender and recipient
-              can access the content of a message. The information is encrypted
-              on the sender's device and can only be decrypted by the intended
-              recipient, preventing any intermediaries, including the platform
-              provider, from accessing the data.
+              Türkiye Fındık, üreticilerin fındık satış taleplerini oluşturmasını ve bu taleplerin en yakın fabrikalara otomatik iletilmesini sağlar. Üretici QR kodlu teslim fişi alır, fabrikaya gidip fındığını teslim eder ve ödeme otomatik olarak hesabına yatırılır.
             </div>
           </div>
         </div>
@@ -59,7 +55,7 @@
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
             <span>
-              Can I access my encrypted data if I forget my encryption key?
+              Platform ücretli mi? Hangi planları sunuyorsunuz?
             </span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
@@ -81,11 +77,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              No, forgetting or losing your encryption key means that your
-              encrypted data cannot be accessed. This is a crucial security
-              measure to ensure that even if someone gains unauthorized access
-              to your account, they won't be able to decrypt and view your
-              messages or files.
+              Üreticiler için platform tamamen ücretsizdir. Fabrikalar için aylık ₺299, kurumsal müşteriler için aylık ₺599 planlarımız bulunmaktadır. Yıllık ödemelerde %20 indirim uygulanır.
             </div>
           </div>
         </div>
@@ -97,8 +89,7 @@
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
             <span>
-              Are there any limitations to the self-destructing messages
-              feature?
+              QR kodlu teslimat sistemi nasıl çalışır?
             </span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
@@ -120,12 +111,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              Self-destructing messages are designed to automatically delete
-              themselves after a specific period or upon being read by the
-              recipient. However, it's important to note that the feature only
-              removes the message from the devices involved in the conversation.
-              Recipients may take screenshots or use other means to capture the
-              content, which is beyond the platform's control.
+              Talep oluşturulduğunda üreticiye benzersiz QR kodlu teslim fişi verilir. Üretici bu fiş ile fabrikaya gider, QR kodu okutur ve fındığını teslim eder. Fabrika teslimatı onayladığında ödeme otomatik olarak üretici hesabına yatırılır.
             </div>
           </div>
         </div>
@@ -137,8 +123,7 @@
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
             <span>
-              What happens if I enable two-factor authentication and lose my
-              device?
+              Ödeme ne kadar sürede hesabıma yatırılır?
             </span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
@@ -160,12 +145,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              Losing your device doesn't automatically compromise your account's
-              security. It's recommended to contact our support team as soon as
-              possible to disable the two-factor authentication on your lost
-              device and set up the authentication on your new device. This
-              process will help protect your account from unauthorized access
-              while ensuring you can regain access to it.
+              Fabrika teslimatı onayladıktan sonra ödeme 24 saat içinde üretici hesabına yatırılır. Acil durumlar için hızlı ödeme seçeneği de mevcuttur.
             </div>
           </div>
         </div>
@@ -177,7 +157,7 @@
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
             <span>
-              Is my personal information shared or sold to third parties?
+              Fındık fiyatları nasıl belirleniyor?
             </span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
@@ -199,10 +179,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              No, we strictly adhere to a privacy-centric approach. Your
-              personal information is never shared, sold, or monetized. We
-              prioritize your privacy and ensure that your data remains
-              confidential and only accessible to you.
+              Fındık fiyatları piyasa koşullarına göre günlük olarak güncellenir. Platform üzerinde canlı fiyat takibi yapabilir, geçmiş fiyat verilerini inceleyebilirsiniz. Fiyatlar kalite, miktar ve teslimat koşullarına göre değişiklik gösterebilir.
             </div>
           </div>
         </div>
@@ -213,7 +190,7 @@
           <button
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
-            <span>Can I use this platform on multiple devices?</span>
+            <span>Mobil uygulama mevcut mu?</span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
               :class="{ '-rotate-[45deg]': activeAccordion==id }"
@@ -234,10 +211,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              Yes, you can access our platform on multiple devices. Your
-              encrypted data remains synced across all devices, allowing you to
-              seamlessly communicate and access your files and messages from
-              anywhere.
+              Evet, iOS ve Android için mobil uygulamamız mevcuttur. Mobil uygulama ile talep oluşturabilir, fiyat takibi yapabilir, QR kodlarını okuyabilir ve tüm işlemlerinizi kolayca yönetebilirsiniz.
             </div>
           </div>
         </div>
@@ -249,7 +223,7 @@
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
             <span>
-              Are there any storage limitations for files and documents?
+              Hangi bölgelerde hizmet veriyorsunuz?
             </span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
@@ -271,11 +245,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              Our platform provides ample storage space for your files and
-              documents. However, there may be storage limitations based on the
-              pricing plan you choose. We offer flexible plans to suit your
-              needs and provide options to upgrade if you require additional
-              storage capacity.
+              Şu anda Türkiye'nin tüm fındık üretim bölgelerinde hizmet veriyoruz. Ordu, Giresun, Trabzon, Rize, Artvin, Sakarya, Düzce ve Zonguldak illerinde aktif olarak çalışıyoruz. Yakında diğer bölgelere de genişlemeyi planlıyoruz.
             </div>
           </div>
         </div>
@@ -286,7 +256,7 @@
           <button
             @click="setActiveAccordion(id)"
             class="flex items-center justify-between w-full p-4 pb-1 text-left font-medium select-none">
-            <span>Is it possible to export my data from the platform?</span>
+            <span>Teknik destek nasıl alabilirim?</span>
             <svg
               class="w-5 h-5 duration-300 ease-out text-accent-500"
               :class="{ '-rotate-[45deg]': activeAccordion==id }"
@@ -307,11 +277,7 @@
             x-collapse=""
             style="display: none;">
             <div class="p-4 pt-2 text-zinc-500">
-              Yes, you can export your data from the platform. We offer export
-              features that allow you to download your messages, files, and
-              documents, ensuring you have a local copy for backup or migration
-              purposes. It provides you with greater control and flexibility
-              over your data.
+              Teknik destek için e-posta, telefon ve canlı sohbet seçeneklerimiz mevcuttur. Üreticiler için ücretsiz destek, fabrika ve kurumsal müşteriler için öncelikli destek hizmeti sunuyoruz. Destek ekibimiz 7/24 hizmetinizdedir.
             </div>
           </div>
         </div>
