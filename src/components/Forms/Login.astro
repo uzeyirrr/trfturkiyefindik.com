@@ -1,3 +1,8 @@
+---
+// PocketBase API'sini import et
+import { auth } from '../../lib/pocketbase.js';
+---
+
 <section>
   <div class="px-8 py-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
     <div class="max-w-lg mx-auto">
@@ -11,7 +16,7 @@
           Tekrar hoş geldiniz! Giriş yapmak için e-posta ve şifrenizi girin.
         </p>
       </div>
-      <form action="#" method="POST" class="mx-auto mt-12 max-w-lg">
+      <form id="loginForm" class="mx-auto mt-12 max-w-lg">
         <div>
           <label class="text-base leading-normal text-base-500 font-medium">
             E-posta
@@ -56,10 +61,21 @@
         </div>
         <div class="mt-10">
           <button
+            type="submit"
+            id="loginBtn"
             class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-500/50 h-10 px-6 py-3 text-base font-medium rounded-lg w-full"
           >
-            Giriş Yap
+            <span id="loginBtnText">Giriş Yap</span>
+            <div id="loginBtnSpinner" class="hidden ml-2">
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
           </button>
+        </div>
+        <div id="loginMessage" class="mt-4 text-center hidden">
+          <p id="loginMessageText" class="text-sm font-medium"></p>
         </div>
         <div class="flex items-center mt-4">
           <p class="text-sm leading-normal text-base-500 font-medium">
@@ -76,3 +92,73 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target as HTMLFormElement;
+    const submitBtn = document.getElementById('loginBtn') as HTMLButtonElement;
+    const btnText = document.getElementById('loginBtnText') as HTMLSpanElement;
+    const btnSpinner = document.getElementById('loginBtnSpinner') as HTMLDivElement;
+    
+    // Form verilerini al
+    const formData = new FormData(form);
+    const email = formData.get('email');
+    const password = formData.get('password');
+    
+    // Loading durumu
+    submitBtn.disabled = true;
+    btnText.textContent = 'Giriş yapılıyor...';
+    btnSpinner.classList.remove('hidden');
+    hideMessage();
+    
+    try {
+      // PocketBase API'sini çağır
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        showMessage('Giriş başarılı! Dashboard\'a yönlendiriliyorsunuz...', 'success');
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 2000);
+      } else {
+        showMessage(result.error || 'Giriş sırasında bir hata oluştu.', 'error');
+      }
+    } catch (error) {
+      showMessage('Bağlantı hatası. Lütfen tekrar deneyin.', 'error');
+    } finally {
+      // Loading durumunu kaldır
+      submitBtn.disabled = false;
+      btnText.textContent = 'Giriş Yap';
+      btnSpinner.classList.add('hidden');
+    }
+  });
+  
+  function showMessage(message: string, type: 'success' | 'error') {
+    const messageDiv = document.getElementById('loginMessage') as HTMLDivElement;
+    const messageText = document.getElementById('loginMessageText') as HTMLParagraphElement;
+    
+    messageText.textContent = message;
+    messageDiv.className = `mt-4 text-center p-3 rounded-lg ${
+      type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+    }`;
+    messageDiv.classList.remove('hidden');
+  }
+  
+  function hideMessage() {
+    const messageDiv = document.getElementById('loginMessage') as HTMLDivElement;
+    messageDiv.classList.add('hidden');
+  }
+</script>

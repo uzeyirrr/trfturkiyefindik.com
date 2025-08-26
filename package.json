@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "description": "Türkiye Fındık - Üretici ve Fabrikaları Buluşturan Dijital Pazar",
-  "keywords": ["fındık", "ticaret", "dijital pazar", "üretici", "fabrika"],
+  "keywords": [
+    "fındık",
+    "ticaret",
+    "dijital pazar",
+    "üretici",
+    "fabrika"
+  ],
   "author": "Türkiye Fındık",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "pocketbase": "node start-pocketbase.js",
+    "dev:full": "concurrently \"npm run pocketbase\" \"npm run dev\""
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.4.1",
@@ -18,6 +26,10 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.10",
     "astro": "^5.12.6",
+    "concurrently": "^9.2.1",
     "tailwindcss": "^4.1.10"
+  },
+  "dependencies": {
+    "pocketbase": "^0.26.2"
   }
 }

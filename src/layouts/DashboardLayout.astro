@@ -1,0 +1,16 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { Font } from "astro:assets";
+---
+
+<html
+  lang="tr"
+  class="scroll-smooth selection:bg-accent-500 selection:text-white no-touchevents hydrated">
+  <head>
+    <BaseHead />
+    <Font cssVariable="--font-sans" preload />
+  </head>
+  <body class="bg-gray-50">
+    <slot />
+  </body>
+</html>
