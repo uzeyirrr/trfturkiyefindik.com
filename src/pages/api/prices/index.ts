@@ -1,10 +1,24 @@
 import type { APIRoute } from 'astro';
-import { prices } from '../../../lib/pocketbase.js';
+import { prices, auth } from '../../../lib/pocketbase.js';
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
   try {
+    // Kullanıcının giriş yapmış olup olmadığını kontrol et
+    const currentUser = auth.getCurrentUser();
+    if (!currentUser) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Bu işlem için giriş yapmanız gereklidir.'
+      }), {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    }
+
     const result = await prices.getAll();
 
     if (result.success) {

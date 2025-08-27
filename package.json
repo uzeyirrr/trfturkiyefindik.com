@@ -25,11 +25,15 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.10",
+    "@types/qrcode": "^1.5.5",
     "astro": "^5.12.6",
     "concurrently": "^9.2.1",
     "tailwindcss": "^4.1.10"
   },
   "dependencies": {
-    "pocketbase": "^0.26.2"
+    "chart.js": "^4.5.0",
+    "html5-qrcode": "^2.3.8",
+    "pocketbase": "^0.26.2",
+    "qrcode": "^1.5.4"
   }
 }

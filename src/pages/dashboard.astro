@@ -1,6 +1,15 @@
 ---
 import DashboardLayout from "../layouts/DashboardLayout.astro";
 import DashboardContent from "../components/dashboard/DashboardLayout.astro";
+import { auth } from "../lib/pocketbase.js";
+
+// Kullanıcının giriş yapmış olup olmadığını kontrol et
+const currentUser = auth.getCurrentUser();
+
+// Eğer kullanıcı giriş yapmamışsa login sayfasına yönlendir
+if (!currentUser) {
+  return Astro.redirect('/login');
+}
 ---
 
 <DashboardLayout>

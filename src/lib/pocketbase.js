@@ -229,6 +229,115 @@ export const prices = {
   }
 };
 
+// Teslimat işlemleri
+export const deliveries = {
+  // Tüm teslimatları getir
+  async getAll() {
+    try {
+      const records = await pb.collection('deliveries').getList(1, 50, {
+        sort: '-created'
+      });
+      return { success: true, deliveries: records.items };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Kullanıcının teslimatlarını getir
+  async getByUser(userId) {
+    try {
+      const records = await pb.collection('deliveries').getList(1, 50, {
+        filter: `user = "${userId}"`,
+        sort: '-created'
+      });
+      return { success: true, deliveries: records.items };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  async getByFactory(factoryId) {
+    try {
+      const records = await pb.collection('deliveries').getList(1, 50, {
+        filter: `factory = "${factoryId}"`,
+        sort: '-created'
+      });
+      return { success: true, deliveries: records.items };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Yeni teslimat oluştur
+  async create(deliveryData) {
+    try {
+      const record = await pb.collection('deliveries').create(deliveryData);
+      return { success: true, delivery: record };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Teslimat güncelle
+  async update(id, deliveryData) {
+    try {
+      const record = await pb.collection('deliveries').update(id, deliveryData);
+      return { success: true, delivery: record };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Teslimat sil
+  async delete(id) {
+    try {
+      await pb.collection('deliveries').delete(id);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Teslimat detayını getir
+  async getById(id) {
+    try {
+      const record = await pb.collection('deliveries').getOne(id);
+      return { success: true, delivery: record };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+};
+
+// Fabrika işlemleri
+export const factories = {
+  // Tüm fabrikaları getir
+  async getAll() {
+    try {
+      const records = await pb.collection('users').getList(1, 50, {
+        filter: 'role = "factory"',
+        sort: 'name'
+      });
+      return { success: true, factories: records.items };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Belirli şehirdeki fabrikaları getir
+  async getByCity(city) {
+    try {
+      const records = await pb.collection('users').getList(1, 50, {
+        filter: `role = "factory" && city = "${city}"`,
+        sort: 'name'
+      });
+      return { success: true, factories: records.items };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+};
+
 // İstatistik işlemleri
 export const stats = {
   // Dashboard istatistiklerini al

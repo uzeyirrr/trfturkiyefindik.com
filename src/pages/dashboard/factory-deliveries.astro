@@ -1,0 +1,581 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import FactoryDeliveriesContent from "../../components/dashboard/FactoryDeliveriesLayout.astro";
+import { auth } from "../../lib/pocketbase.js";
+
+// Kullanıcının giriş yapmış olup olmadığını kontrol et
+const currentUser = auth.getCurrentUser();
+
+// Eğer kullanıcı giriş yapmamışsa login sayfasına yönlendir
+if (!currentUser) {
+  return Astro.redirect('/login');
+}
+
+// Sadece fabrika rolündeki kullanıcılar erişebilir
+if (currentUser.role !== 'factory') {
+  return Astro.redirect('/dashboard');
+}
+---
+
+<DashboardLayout>
+  <FactoryDeliveriesContent>
+    <!-- Arama ve Filtreleme -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900">Teslimat Arama</h3>
+        <p class="text-sm text-gray-600">QR kod ile veya teslimat ID'si ile arama yapın</p>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Manuel ID Arama -->
+          <div>
+            <label for="searchId" class="block text-sm font-medium text-gray-700 mb-2">
+              Teslimat ID
+            </label>
+            <div class="flex">
+              <input
+                type="text"
+                id="searchId"
+                placeholder="Teslimat ID girin"
+                class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+              />
+              <button
+                id="searchBtn"
+                class="px-4 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition-colors"
+              >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- QR Kod Tarama -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              QR Kod Tarama
+            </label>
+            <button
+              id="qrScanBtn"
+              class="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 transition-colors flex items-center justify-center space-x-2"
+            >
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V6a1 1 0 00-1-1H5a1 1 0 00-1 1v1a1 1 0 001 1zm12 0h2a1 1 0 001-1V6a1 1 0 00-1-1h-2a1 1 0 00-1 1v1a1 1 0 001 1zM5 20h2a1 1 0 001-1v-1a1 1 0 00-1-1H5a1 1 0 00-1 1v1a1 1 0 001 1z"></path>
+              </svg>
+              <span>QR Tara</span>
+            </button>
+          </div>
+
+          <!-- Durum Filtresi -->
+          <div>
+            <label for="statusFilter" class="block text-sm font-medium text-gray-700 mb-2">
+              Durum Filtresi
+            </label>
+            <select
+              id="statusFilter"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+            >
+              <option value="">Tümü</option>
+              <option value="false">Beklemede</option>
+              <option value="true">Tamamlandı</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teslimat Listesi -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900">Gelen Teslimatlar</h3>
+        <p class="text-sm text-gray-600">Bu fabrikaya gelen teslimatlar</p>
+      </div>
+      <div class="p-6">
+        <div id="deliveriesList" class="space-y-4">
+          <!-- Teslimatlar buraya yüklenecek -->
+          <div class="text-center py-8">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+            <p class="text-gray-500 mt-2">Teslimatlar yükleniyor...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </FactoryDeliveriesContent>
+</DashboardLayout>
+
+<!-- QR Tarama Modal -->
+<div id="qrModal" class="fixed inset-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black bg-opacity-75"></div>
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+        <div class="absolute right-0 top-0 pr-4 pt-4">
+          <button id="closeQrModal" class="rounded-md bg-white text-gray-400 hover:text-gray-600">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">QR Kod Tarama</h3>
+          <div id="qrReader" class="mx-auto mb-4"></div>
+          <p class="text-sm text-gray-600">QR kodu kameraya gösterin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Teslimat Detay Modal -->
+<div id="deliveryModal" class="fixed inset-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black bg-opacity-75"></div>
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
+        <div class="absolute right-0 top-0 pr-4 pt-4">
+          <button id="closeDeliveryModal" class="rounded-md bg-white text-gray-400 hover:text-gray-600">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div id="deliveryModalContent">
+          <!-- Modal içeriği dinamik olarak yüklenecek -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Global değişkenler
+  let currentUser = null;
+  let allDeliveries = [];
+  let filteredDeliveries = [];
+
+  // Sayfa yüklendiğinde çalışacak kodlar
+  document.addEventListener('DOMContentLoaded', async function() {
+    await loadUserInfo();
+    await loadDeliveries();
+    setupEventHandlers();
+  });
+
+  // Kullanıcı bilgilerini yükle
+  async function loadUserInfo() {
+    try {
+      const response = await fetch('/api/auth/me');
+      const result = await response.json();
+      
+      if (result.success) {
+        currentUser = result.user;
+      } else {
+        console.error('Kullanıcı bilgisi alınamadı:', result.error);
+      }
+    } catch (error) {
+      console.error('Kullanıcı bilgisi yükleme hatası:', error);
+    }
+  }
+
+  // Fabrikaya gelen teslimatları yükle
+  async function loadDeliveries() {
+    try {
+      const response = await fetch('/api/deliveries/factory');
+      const result = await response.json();
+      
+      if (result.success) {
+        allDeliveries = result.deliveries;
+        filteredDeliveries = [...allDeliveries];
+        renderDeliveries();
+      } else {
+        console.error('Teslimat yükleme hatası:', result.error);
+        showError('Teslimatlar yüklenirken hata oluştu');
+      }
+    } catch (error) {
+      console.error('Teslimat yükleme hatası:', error);
+      showError('Bağlantı hatası');
+    }
+  }
+
+  // Teslimatları render et
+  function renderDeliveries() {
+    const deliveriesList = document.getElementById('deliveriesList');
+    
+    if (filteredDeliveries.length === 0) {
+      deliveriesList.innerHTML = `
+        <div class="text-center py-8">
+          <svg class="h-12 w-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+          <p class="text-gray-500">Henüz teslimat bulunmuyor</p>
+        </div>
+      `;
+      return;
+    }
+
+    deliveriesList.innerHTML = filteredDeliveries.map(delivery => `
+      <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+              <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-medium text-gray-900">Teslimat #${delivery.id.slice(-8)}</h4>
+              <p class="text-sm text-gray-600">${delivery.kg} kg • ${new Date(delivery.teslimat_tarihi).toLocaleDateString('tr-TR')}</p>
+                             <p class="text-xs text-gray-500">Üretici: ${delivery.userDetails.name}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-1 text-xs rounded-full ${
+              delivery.tamamlandi 
+                ? 'bg-green-100 text-green-800' 
+                : 'bg-yellow-100 text-yellow-800'
+            }">
+              ${delivery.tamamlandi ? 'Tamamlandı' : 'Beklemede'}
+            </span>
+            <button 
+              onclick="showDeliveryDetails('${delivery.id}')"
+              class="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Detaylar
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Event handler'ları kur
+  function setupEventHandlers() {
+         // ID arama
+     const searchBtn = document.getElementById('searchBtn');
+     const searchId = document.getElementById('searchId') as HTMLInputElement;
+     
+     searchBtn.addEventListener('click', () => {
+       const id = searchId.value.trim();
+       if (id) {
+         searchById(id);
+       }
+     });
+
+     searchId.addEventListener('keypress', (e) => {
+       if (e.key === 'Enter') {
+         const id = searchId.value.trim();
+         if (id) {
+           searchById(id);
+         }
+       }
+     });
+
+     // Durum filtresi
+     const statusFilter = document.getElementById('statusFilter') as HTMLSelectElement;
+     statusFilter.addEventListener('change', filterDeliveries);
+
+    // QR tarama modal
+    const qrScanBtn = document.getElementById('qrScanBtn');
+    const qrModal = document.getElementById('qrModal');
+    const closeQrModal = document.getElementById('closeQrModal');
+
+    qrScanBtn.addEventListener('click', openQrScanner);
+    closeQrModal.addEventListener('click', closeQrScanner);
+
+    // Teslimat modal
+    const closeDeliveryModal = document.getElementById('closeDeliveryModal');
+    closeDeliveryModal.addEventListener('click', closeDeliveryDetails);
+  }
+
+     // ID ile arama
+   function searchById(id: string) {
+     const delivery = allDeliveries.find(d => d.id.includes(id) || d.id.slice(-8) === id);
+     if (delivery) {
+       showDeliveryDetails(delivery.id);
+     } else {
+       showError('Teslimat bulunamadı');
+     }
+   }
+
+     // Durum filtreleme
+   function filterDeliveries() {
+     const statusFilter = document.getElementById('statusFilter') as HTMLSelectElement;
+     const status = statusFilter.value;
+    
+    if (status === '') {
+      filteredDeliveries = [...allDeliveries];
+    } else {
+      filteredDeliveries = allDeliveries.filter(delivery => 
+        delivery.tamamlandi.toString() === status
+      );
+    }
+    
+    renderDeliveries();
+  }
+
+  // QR tarayıcı aç
+  function openQrScanner() {
+    const qrModal = document.getElementById('qrModal');
+    qrModal.classList.remove('hidden');
+    
+    // QR kod kütüphanesini yükle ve tarayıcıyı başlat
+    loadQrScanner();
+  }
+
+     // QR tarayıcı kapat
+   function closeQrScanner() {
+     const qrModal = document.getElementById('qrModal');
+     qrModal.classList.add('hidden');
+     
+     // QR tarayıcıyı durdur
+     if ((window as any).qrScanner) {
+       (window as any).qrScanner.stop();
+     }
+   }
+
+  // QR tarayıcı yükle
+  async function loadQrScanner() {
+    try {
+      // HTML5-QRCode kütüphanesini yükle
+      const { Html5Qrcode } = await import('html5-qrcode');
+      
+      const qrReader = document.getElementById('qrReader');
+      qrReader.innerHTML = '<div id="qr-reader"></div>';
+      
+             const html5QrCode = new Html5Qrcode("qr-reader");
+       (window as any).qrScanner = html5QrCode;
+      
+      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        (decodedText) => {
+          // QR kod başarıyla okundu
+          const deliveryId = extractDeliveryId(decodedText);
+          if (deliveryId) {
+            closeQrScanner();
+            searchById(deliveryId);
+          } else {
+            showError('Geçersiz QR kod');
+          }
+        },
+        (errorMessage) => {
+          // Hata durumunda bir şey yapma
+        }
+      );
+    } catch (error) {
+      console.error('QR tarayıcı yükleme hatası:', error);
+      showError('QR tarayıcı yüklenemedi');
+    }
+  }
+
+  // QR kod URL'sinden teslimat ID'sini çıkar
+  function extractDeliveryId(qrData) {
+    const match = qrData.match(/\/delivery\/([^\/]+)$/);
+    return match ? match[1] : null;
+  }
+
+  // Teslimat detaylarını göster
+  async function showDeliveryDetails(deliveryId) {
+    try {
+      const response = await fetch(`/api/deliveries/${deliveryId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        const delivery = result.delivery;
+        const modalContent = document.getElementById('deliveryModalContent');
+        
+        modalContent.innerHTML = `
+          <div class="text-center mb-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Teslimat Detayları</h3>
+            <p class="text-sm text-gray-600">ID: ${delivery.id.slice(-8)}</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="space-y-4">
+              <h4 class="font-semibold text-gray-900">Teslimat Bilgileri</h4>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Teslimat ID:</span>
+                  <span class="font-medium">${delivery.id.slice(-8)}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Tahmini Kilo:</span>
+                  <span class="font-medium">${delivery.kg} kg</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Teslimat Tarihi:</span>
+                  <span class="font-medium">${new Date(delivery.teslimat_tarihi).toLocaleDateString('tr-TR')}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Oluşturulma Tarihi:</span>
+                  <span class="font-medium">${new Date(delivery.created).toLocaleDateString('tr-TR')}</span>
+                </div>
+              </div>
+            </div>
+            
+                         <div class="space-y-4">
+               <h4 class="font-semibold text-gray-900">Üretici Bilgileri</h4>
+               <div class="space-y-3">
+                 <div class="flex justify-between">
+                   <span class="text-gray-600">Ad Soyad:</span>
+                   <span class="font-medium">${delivery.userDetails.name}</span>
+                 </div>
+                 <div class="flex justify-between">
+                   <span class="text-gray-600">Telefon:</span>
+                   <span class="font-medium">${delivery.userDetails.phone}</span>
+                 </div>
+                 <div class="flex justify-between">
+                   <span class="text-gray-600">Şehir:</span>
+                   <span class="font-medium">${delivery.userDetails.city}</span>
+                 </div>
+               </div>
+             </div>
+          </div>
+          
+          <div class="border-t pt-6">
+            <h4 class="font-semibold text-gray-900 mb-4">Teslimat İşlemleri</h4>
+            <form id="deliveryForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label for="actualKg" class="block text-sm font-medium text-gray-700 mb-2">
+                    Gerçek Kilo (kg)
+                  </label>
+                  <input
+                    type="number"
+                    id="actualKg"
+                    name="actualKg"
+                    step="0.01"
+                    min="0"
+                    value="${delivery.kg}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
+                  <label for="randiman" class="block text-sm font-medium text-gray-700 mb-2">
+                    Randıman (%)
+                  </label>
+                  <input
+                    type="number"
+                    id="randiman"
+                    name="randiman"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    value="${delivery.randiman || 0}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
+                  <label for="factoryPrice" class="block text-sm font-medium text-gray-700 mb-2">
+                    Ödeme Tutarı (₺/kg)
+                  </label>
+                  <input
+                    type="number"
+                    id="factoryPrice"
+                    name="factoryPrice"
+                    step="0.01"
+                    min="0"
+                    value="${delivery.factory_price || 0}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+              
+              <div class="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onclick="closeDeliveryDetails()"
+                  class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                >
+                  İptal
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  Teslimat Alındı
+                </button>
+              </div>
+            </form>
+          </div>
+        `;
+        
+        // Form submit handler'ı ekle
+        const form = document.getElementById('deliveryForm');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          updateDelivery(deliveryId);
+        });
+        
+        // Modal'ı göster
+        const deliveryModal = document.getElementById('deliveryModal');
+        deliveryModal.classList.remove('hidden');
+        
+      } else {
+        showError('Teslimat detayları alınamadı');
+      }
+    } catch (error) {
+      console.error('Teslimat detay hatası:', error);
+      showError('Bağlantı hatası');
+    }
+  }
+
+     // Teslimat detaylarını güncelle
+   async function updateDelivery(deliveryId) {
+     const form = document.getElementById('deliveryForm') as HTMLFormElement;
+     const formData = new FormData(form);
+     
+     const data = {
+       kg: parseFloat(String(formData.get('actualKg') || '0')),
+       randiman: parseFloat(String(formData.get('randiman') || '0')),
+       factory_price: parseFloat(String(formData.get('factoryPrice') || '0')),
+       tamamlandi: true
+     };
+
+    try {
+      const response = await fetch(`/api/deliveries/${deliveryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showSuccess('Teslimat başarıyla güncellendi');
+        closeDeliveryDetails();
+        await loadDeliveries(); // Listeyi yenile
+      } else {
+        showError('Güncelleme hatası: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Güncelleme hatası:', error);
+      showError('Bağlantı hatası');
+    }
+  }
+
+  // Teslimat detaylarını kapat
+  function closeDeliveryDetails() {
+    const deliveryModal = document.getElementById('deliveryModal');
+    deliveryModal.classList.add('hidden');
+  }
+
+  // Hata mesajı göster
+  function showError(message) {
+    alert(message); // Basit alert, daha sonra toast notification ile değiştirilebilir
+  }
+
+  // Başarı mesajı göster
+  function showSuccess(message) {
+    alert(message); // Basit alert, daha sonra toast notification ile değiştirilebilir
+  }
+
+  // Global fonksiyonlar
+  (window as any).showDeliveryDetails = showDeliveryDetails;
+  (window as any).closeDeliveryDetails = closeDeliveryDetails;
+</script>

@@ -6,7 +6,11 @@ Türkiye Fındık, üretici ve fabrikaları buluşturan dijital fındık pazarı
 
 - **Üretici Paneli**: Çiftçiler kolayca fındık satış talebi oluşturabilir
 - **Fabrika Paneli**: Fabrikalar talepleri görüp takip edebilir
+- **Teslimat Sistemi**: Üreticiler için teslimat oluşturma ve yönetimi
 - **QR Kodlu Teslimat**: Güvenli ve hızlı teslimat süreci
+- **Fabrika Teslimat Paneli**: Fabrikalar için teslimat yönetim sistemi
+- **QR Kod Tarama**: Kamera ile QR kod okuma özelliği
+- **Randıman ve Ödeme**: Fabrikalar için randıman ve ödeme girişi
 - **Otomatik Ödeme**: Teslimat onayı sonrası otomatik ödeme
 - **Fiyat Takibi**: Canlı fındık fiyatları ve analitik
 - **Dashboard**: Kullanıcı yönetim paneli ve fiyat yönetimi
@@ -70,6 +74,9 @@ pnpm run dev
 - **Kayıt** (`/signup`) - Yeni kullanıcı kaydı
 - **Dashboard** (`/dashboard`) - Kullanıcı yönetim paneli
 - **Fındık Fiyatları** (`/dashboard/prices`) - Canlı fiyat takibi
+- **Teslimatlar** (`/dashboard/deliveries`) - Üretici teslimat yönetimi
+- **Fabrika Teslimatları** (`/dashboard/factory-deliveries`) - Fabrika teslimat yönetimi
+- **Teslimat Detayı** (`/delivery/[id]`) - QR kod ile erişilebilir teslimat detayı
 - **SSS** (`/faq`) - Sık sorulan sorular
 - **Gizlilik** (`/privacy`) - Gizlilik politikası
 - **Şartlar** (`/terms`) - Kullanım şartları
@@ -103,7 +110,40 @@ pnpm run dev
 - `GET /api/prices` - Tüm fiyatları getir
 - `POST /api/prices/add` - Yeni fiyat ekle (admin only)
 
+### Teslimat Yönetimi
+- `GET /api/deliveries` - Kullanıcının teslimatlarını getir
+- `POST /api/deliveries` - Yeni teslimat oluştur
+- `GET /api/deliveries/[id]` - Teslimat detayını getir
+- `PUT /api/deliveries/[id]` - Teslimat güncelle (fabrika/admin only)
+- `GET /api/deliveries/factory` - Fabrikaya gelen teslimatları getir
+- `GET /api/factories` - Kullanıcının şehrindeki fabrikaları getir
+
 ## 📋 Changelog
+
+### [1.2.0] - 2024-12-19
+#### ✨ Yeni Özellikler
+- **Teslimat Sistemi**: Üreticiler için teslimat oluşturma ve yönetimi
+- **QR Kodlu Teslimat Fişleri**: Her teslimat için benzersiz QR kod
+- **Fabrika Teslimat Paneli**: Fabrikalar için teslimat yönetim sistemi
+- **QR Kod Tarama**: Kamera ile QR kod okuma özelliği
+- **Teslimat Durumu Takibi**: Beklemede/Tamamlandı durum yönetimi
+- **Randıman ve Ödeme Sistemi**: Fabrikalar için randıman ve ödeme girişi
+- **Teslimat Filtreleme**: Durum bazlı teslimat filtreleme
+- **Teslimat Arama**: ID ile manuel teslimat arama
+
+#### 🔧 Teknik İyileştirmeler
+- **QR Code Kütüphanesi**: `qrcode` ve `html5-qrcode` entegrasyonu
+- **Teslimat API'leri**: CRUD operasyonları için API endpoints
+- **Rol Tabanlı Erişim**: Teslimat sayfaları için yetki kontrolü
+- **TypeScript Güvenliği**: Form işlemleri için tip güvenliği
+- **Error Handling**: Teslimat işlemleri için gelişmiş hata yönetimi
+- **Responsive Modal**: Teslimat detayları için responsive modal tasarımı
+
+#### 🐛 Hata Düzeltmeleri
+- Üretici bilgileri tutarlılık sorunu çözüldü
+- API endpoint'lerinde import path düzeltmeleri
+- Dashboard layout sorunları giderildi
+- TypeScript tip hataları düzeltildi
 
 ### [1.1.0] - 2024-12-19
 #### ✨ Yeni Özellikler
