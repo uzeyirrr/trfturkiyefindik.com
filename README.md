@@ -120,7 +120,7 @@ pnpm run dev
 
 ## 📋 Changelog
 
-### [1.2.0] - 2024-12-19
+### [1.2.0] 
 #### ✨ Yeni Özellikler
 - **Teslimat Sistemi**: Üreticiler için teslimat oluşturma ve yönetimi
 - **QR Kodlu Teslimat Fişleri**: Her teslimat için benzersiz QR kod
@@ -145,7 +145,7 @@ pnpm run dev
 - Dashboard layout sorunları giderildi
 - TypeScript tip hataları düzeltildi
 
-### [1.1.0] - 2024-12-19
+### [1.1.0] 
 #### ✨ Yeni Özellikler
 - **Dashboard Sistemi**: Kullanıcı yönetim paneli eklendi
 - **Fındık Fiyatları Sayfası**: Canlı fiyat takibi ve yönetimi
@@ -202,12 +202,6 @@ Bu proje [GPL-3.0 lisansı](https://opensource.org/licenses/GPL-3.0) altında li
 **Türkiye Fındık** - Dijital fındık ticareti platformu
 
 - **Website**: [https://trfturkiyefindik.com](https://trfturkiyefindik.com)
-- **E-posta**: info@trfturkiyefindik.com
-- **Telefon**: +90 xxx xxx xx xx
-
-## 🚀 Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/trfturkiyefindik/trfturkiyefindik.com)
 
 ---
 
