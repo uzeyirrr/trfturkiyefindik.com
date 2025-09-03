@@ -1,0 +1,69 @@
+---
+import OptimizedImage from "../../layouts/utilities/OptimizedImage.astro";
+
+const featuresList = [
+  {
+    title: "Üretici Paneli",
+    description: "Çiftçiler, fındık satmak istediklerinde kolayca talep oluşturabilir. Talep, en yakın fabrikaya otomatik iletilir.",
+  },
+  {
+    title: "Fabrika Paneli",
+    description: "Fabrikalar, kendilerine iletilen talepleri görüp takip edebilir, teslimatları onaylayabilir.",
+  },
+  {
+    title: "Fiyat Takibi",
+    description: "Yıl boyunca güncel fındık fiyatlarını takip edebileceğiniz bir borsa ekranı.",
+  },
+];
+---
+
+<section class="overflow-hidden">
+  <div class="px-8 pt-32 mx-auto md:px-12 lg:px-24 max-w-7xl relative">
+    <div class="max-w-2xl text-center mx-auto lg:text-balance mb-10">
+      <p class="text-sm leading-normal font-bold uppercase text-accent-600">
+        Türkiye Fındık
+      </p>
+      <h2
+        class="text-xl/snug leading-tight tracking-tight sm:text-2xl/snug md:text-3xl/snug capitalize lg:text-4xl/snug mt-4 font-medium text-base-900">
+        Türkiye Fındık – Üretici ve Fabrikaları Buluşturan Dijital Pazar
+      </h2>
+      <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+        Fındığınızı en iyi fiyata, güvenle satın. Fiyat takibi yapın, taleplerinizi kolayca yönetin.
+      </p>
+      <div
+        class="flex flex-wrap items-center gap-2 justify-center mx-auto mt-12">
+        <a
+          href="https://panel.trfturkiyefindik.com/register"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-700/50 h-9 px-4 py-2 text-sm font-medium rounded-md">
+          Hemen Başla
+        </a>
+        <a
+          href="#how-it-works"
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-base-500 bg-white hover:bg-accent-100 ring-1 ring-base-200 focus:ring-accent-100 hover:text-accent-600 h-9 px-4 py-2 text-sm font-medium rounded-md">
+          Daha Fazla Bilgi
+        </a>
+      </div>
+    </div>
+    <div
+      class="lg:gap-x-8 lg:grid-cols-3 max-w-4xl mt-8 mx-auto sm:gap-x-6 sm:gap-y-12 sm:grid sm:grid-cols-2 sm:space-y-0 space-y-6 text-center text-sm items-start">
+      {
+        featuresList.map(({ title, description }) => (
+          <div class="text-base-500 lg:text-balance">
+            <strong class="text-base-700">{title}</strong> ━ {description}
+          </div>
+        ))
+      }
+    </div>
+    <div class="relative w-full mx-auto max-w-7xl items-center py-12 pb-12">
+      <div class="p-10 bg-accent-50 rounded-2xl">
+        <OptimizedImage
+          src="/dashboard.png"
+          alt="Türkiye Fındık Dashboard"
+          width={1200}
+          height={700}
+          class="relative w-full ring-4 ring-base-50 border border-base-200 lg:rounded-2xl object-cover rounded"
+        />
+      </div>
+    </div>
+  </div>
+</section>

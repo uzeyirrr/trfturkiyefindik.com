@@ -1,0 +1,163 @@
+<section>
+  <div class="px-8 py-32 mx-auto md:px-12 lg:px-24 max-w-7xl ">
+    <div class="max-w-lg mx-auto text-center">
+      <h2
+        class="text-xl leading-tight tracking-tight sm:text-2xl md:text-3xl capitalize lg:text-4xl font-semibold text-base-900 lg:text-balance"
+      >
+        Topluluğumuza katılın
+      </h2>
+      <p class="text-base leading-normal mt-4 text-base-500 font-medium">
+        Fındık ticaretinizi dijitalleştirmek için kayıt olun ve hemen başlayın.
+      </p>
+    </div>
+    <form action="#" method="POST" class="mx-auto mt-12 max-w-lg">
+      <div class="flex flex-col gap-y-6">
+        <div>
+          <label class="text-base leading-normal text-base-500 font-medium">
+            Ad
+          </label>
+          <div class="mt-2.5">
+            <input
+              type="text"
+              name="first-name"
+              id="first-name"
+              autocomplete="given-name"
+              required
+              aria-required="true"
+              aria-describedby="first-name-error"
+              placeholder="Adınız"
+              class="block w-full h-10 px-4 py-2 text-sm text-accent-700 duration-300 bg-white border border-transparent rounded-lg appearance-none ring-1 ring-base-200 placeholder-base-400 focus:border-base-300 focus:bg-transparent focus:outline-none focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 sm:text-sm"
+            />
+            <span id="first-name-error" class="text-red-600 text-sm hidden">
+              Lütfen adınızı girin.
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="text-base leading-normal text-base-500 font-medium">
+            Soyad
+          </label>
+          <div class="mt-2.5">
+            <input
+              type="text"
+              name="last-name"
+              id="last-name"
+              autocomplete="family-name"
+              required
+              aria-required="true"
+              aria-describedby="last-name-error"
+              placeholder="Soyadınız"
+              class="block w-full h-10 px-4 py-2 text-sm text-accent-700 duration-300 bg-white border border-transparent rounded-lg appearance-none ring-1 ring-base-200 placeholder-base-400 focus:border-base-300 focus:bg-transparent focus:outline-none focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 sm:text-sm"
+            />
+            <span id="last-name-error" class="text-red-600 text-sm hidden">
+              Lütfen soyadınızı girin.
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="text-base leading-normal text-base-500 font-medium">
+            E-posta
+          </label>
+          <div class="mt-2.5">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              autocomplete="email"
+              required
+              aria-required="true"
+              aria-describedby="email-error"
+              placeholder="E-posta adresiniz"
+              class="block w-full h-10 px-4 py-2 text-sm text-accent-700 duration-300 bg-white border border-transparent rounded-lg appearance-none ring-1 ring-base-200 placeholder-base-400 focus:border-base-300 focus:bg-transparent focus:outline-none focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 sm:text-sm"
+            />
+            <span id="email-error" class="text-red-600 text-sm hidden">
+              Lütfen geçerli bir e-posta adresi girin.
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="text-base leading-normal text-base-500 font-medium">
+            Şifre
+          </label>
+          <div class="mt-2.5">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autocomplete="new-password"
+              required
+              aria-required="true"
+              aria-describedby="password-error"
+              placeholder="Şifreniz"
+              class="block w-full h-10 px-4 py-2 text-sm text-accent-700 duration-300 bg-white border border-transparent rounded-lg appearance-none ring-1 ring-base-200 placeholder-base-400 focus:border-base-300 focus:bg-transparent focus:outline-none focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 sm:text-sm"
+            />
+            <span id="password-error" class="text-red-600 text-sm hidden">
+              Lütfen şifrenizi girin.
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="text-base leading-normal text-base-500 font-medium">
+            Hesap Türü
+          </label>
+          <div class="mt-2.5">
+            <select
+              name="account-type"
+              id="account-type"
+              required
+              aria-required="true"
+              class="block w-full h-10 px-4 py-2 text-sm text-accent-700 duration-300 bg-white border border-transparent rounded-lg appearance-none ring-1 ring-base-200 focus:border-base-300 focus:bg-transparent focus:outline-none focus:ring-accent-500 focus:ring-offset-2 focus:ring-2 sm:text-sm"
+            >
+              <option value="">Hesap türünü seçin</option>
+              <option value="producer">Üretici</option>
+              <option value="factory">Fabrika</option>
+              <option value="corporate">Kurumsal</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center mt-4 gap-3">
+        <input
+          id="agreement"
+          name="agreement"
+          type="checkbox"
+          class="size-4 rounded border-base-300 text-accent-600 focus:ring-accent-600 shadow"
+        />
+        <label class="undefined block text-sm text-base-500 font-medium">
+          <a
+            class="text-base leading-normal text-accent-500 font-medium hover:text-base-500"
+            href="/terms"
+          >
+            Kullanım Şartları
+          </a>
+          ve
+          <a
+            class="text-base leading-normal text-accent-500 font-medium hover:text-base-500"
+            href="/privacy"
+          >
+            Gizlilik Politikası
+          </a>
+          'nı kabul ediyorum
+        </label>
+      </div>
+      <div class="mt-10">
+        <button
+          class="flex items-center justify-center transition-all duration-200 focus:ring-2 focus:outline-none text-white bg-accent-600 hover:bg-accent-700 focus:ring-accent-500/50 h-10 px-6 py-3 text-base font-medium rounded-lg w-full"
+        >
+          Kayıt Ol
+        </button>
+      </div>
+      <div class="flex items-center mt-4">
+        <p class="text-sm leading-normal text-base-500 font-medium">
+          Zaten hesabınız var mı?
+          <a
+            class="text-base leading-normal text-accent-500 font-medium hover:text-base-500"
+            href="/login"
+          >
+            Giriş Yap
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
